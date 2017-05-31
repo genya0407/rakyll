@@ -1,8 +1,6 @@
 # Rakyll
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rakyll`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+[Hakyll](https://jaspervdj.be/hakyll/)-inspied **static site generator**.
 
 ## Installation
 
@@ -22,15 +20,13 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+[This](https://github.com/genya0407/blog) is an example.
 
-## Development
+- You need `templates` directory.
+  - You write html template with erb, and place it in `templates`.
+- You might need a directory to place markdown contents.
+  - In the example above, its name is `products`.
+- You might need a directory to place static files(js, css, images).
+  - In the example above, its name is `assets`.
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rakyll. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
+Then, write `site.rb`, execute `ruby site.rb`, and `_site` directory will be generated.
