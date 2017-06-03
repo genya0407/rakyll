@@ -7,8 +7,8 @@ module Rakyll
 
       def initialize(source_filename, opts)
         @source_filename = source_filename
-        metadata_string, markdown_string = File.read(@source_filename).split("---\n")
-        set_metadata_from_yaml(metadata_string)
+        metadatas, markdown_string = YAML::FrontMatter.extract(File.read(@source_filename))
+        set_metadatas(metadatas)
         set_body_from_markdown(markdown_string, opts)
         set_filename(source_filename, '.html')
       end
@@ -18,8 +18,8 @@ module Rakyll
       end
 
       private
-      def set_metadata_from_yaml(metadata_string)
-        YAML.load(metadata_string).each do |key, value|
+      def set_metadatas(metadatas)
+        metadatas.each do |key, value|
           instance_variable_set(:"@#{key}", value)
           singleton_class.class_eval { attr_reader key }
         end

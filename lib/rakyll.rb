@@ -1,5 +1,5 @@
 require 'erb'
-require 'yaml'
+require 'yaml/front-matter'
 require 'pathname'
 require 'fileutils'
 require 'redcarpet'
