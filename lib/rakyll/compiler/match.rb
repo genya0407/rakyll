@@ -26,7 +26,7 @@ module Rakyll
       end
 
       def set_body_from_markdown(markdown_string, opts)
-        markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, opts[:redcarpet_extensions])
+        markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, opts[:redcarpet_extensions] || {})
         @body = markdown.render(markdown_string)
       end
     end
