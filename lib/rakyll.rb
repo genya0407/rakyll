@@ -12,8 +12,8 @@ require 'rakyll/compiler/create'
 require 'rakyll/compiler/match'
 
 module Rakyll
-  def self.dsl(&block)
-    route = Rakyll::Route.new
+  def self.dsl(opts = {}, &block)
+    route = Rakyll::Route.new opts
     route.instance_eval &block
     route.save
   end

@@ -3,7 +3,7 @@ module Rakyll
     class Copy
       include SetFilename
 
-      def initialize(source_filename)
+      def initialize(source_filename, opts)
         @source_filename = source_filename
         set_filename(source_filename)
       end

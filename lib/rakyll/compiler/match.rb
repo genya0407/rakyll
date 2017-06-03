@@ -5,11 +5,11 @@ module Rakyll
       include SetFilename
       attr_reader :body, :url
 
-      def initialize(source_filename)
+      def initialize(source_filename, opts)
         @source_filename = source_filename
         metadata_string, markdown_string = File.read(@source_filename).split("---\n")
         set_metadata_from_yaml(metadata_string)
-        set_body_from_markdown(markdown_string)
+        set_body_from_markdown(markdown_string, opts)
         set_filename(source_filename, '.html')
       end
 
@@ -25,8 +25,8 @@ module Rakyll
         end
       end
 
-      def set_body_from_markdown(markdown_string)
-        markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+      def set_body_from_markdown(markdown_string, opts)
+        markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, opts[:redcarpet_extensions])
         @body = markdown.render(markdown_string)
       end
     end
