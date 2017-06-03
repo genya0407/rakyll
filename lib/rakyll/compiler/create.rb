@@ -10,9 +10,9 @@ module Rakyll
         set_filename(source_filename)
       end
 
-      def load_all(pattern)
+      def load_all(pattern, opts = {})
         Dir.glob(pattern).map do |filename|
-          Match.new filename
+          Match.new filename, opts
         end
       end
 
