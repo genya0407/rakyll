@@ -8,6 +8,7 @@ require "rakyll/version"
 require "rakyll/route"
 require "rakyll/compiler"
 require 'rakyll/compiler/copy'
+require "rakyll/compiler/minify"
 require 'rakyll/compiler/create'
 require 'rakyll/compiler/match'
 

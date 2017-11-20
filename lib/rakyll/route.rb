@@ -20,6 +20,13 @@ module Rakyll
       end
     end
 
+    def minify(pattern, width: nil, height: nil, grayscale: false)
+      Dir.glob(pattern).each do |source_filename|
+        compiler = Rakyll::Compiler::Minify.new source_filename, width: width, height: height, grayscale: grayscale
+        @compilers.push compiler
+      end
+    end
+
     def create(filename, &block)
       compiler = Rakyll::Compiler::Create.new filename, @opts
       compiler.instance_eval &block
