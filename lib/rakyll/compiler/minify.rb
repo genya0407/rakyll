@@ -4,9 +4,12 @@ module Rakyll
   module Compiler
     class Minify
       include SetFilename
+      include SetSourceFilename
+      include WatchSourceFile
 
-      def initialize(source_filename, width: nil, height: nil, grayscale: false)
-        @source_filename = source_filename
+      def initialize(global_options, source_filename, width: nil, height: nil, grayscale: false)
+        @global_options = global_options
+        set_source_filename(source_filename)
         @width = width
         @height = height
         @grayscale = grayscale

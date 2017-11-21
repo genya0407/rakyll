@@ -3,11 +3,14 @@ module Rakyll
     class Match
       include Apply
       include SetFilename
+      include SetSourceFilename
+      include WatchSourceFile
       attr_reader :body, :url
 
-      def initialize(source_filename, opts)
+      def initialize(global_options, source_filename, opts)
+        @global_options = global_options
         @opts = opts
-        @source_filename = source_filename
+        set_source_filename(source_filename)
         metadatas, markdown_string = YAML::FrontMatter.extract(File.read(@source_filename))
         set_metadatas(metadatas)
         @body = markdown_string

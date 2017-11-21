@@ -16,6 +16,10 @@ module Rakyll
   def self.dsl(opts = {}, &block)
     route = Rakyll::Route.new opts
     route.instance_eval &block
-    route.save
+    if opts[:watch]
+      route.watch
+    else
+      route.save
+    end
   end
 end

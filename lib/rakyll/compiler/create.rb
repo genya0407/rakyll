@@ -3,10 +3,12 @@ module Rakyll
     class Create
       include Apply
       include SetFilename
+      include WatchSourceFile
       attr_reader :url
 
-      def initialize(source_filename, opts)
-        @source_filename = source_filename
+      def initialize(global_options, source_filename, opts)
+        @global_options = global_options
+        @opts = opts
         set_filename(source_filename)
       end
 
