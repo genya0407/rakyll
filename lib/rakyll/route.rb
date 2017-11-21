@@ -3,22 +3,26 @@ require 'webrick'
 
 module Rakyll
   class Route
-    def initialize(opts)
-      @global_options = opts
+    def initialize(global_options)
+      @global_options = global_options
       @compilers = []
     end
 
-    def match(pattern, &block)
+    def match(pattern, dependencies: [], &block)
       Dir.glob(pattern).each do |source_filename|
-        compiler = Rakyll::Compiler::Match.new @global_options, source_filename, @opts
-        compiler.instance_eval &block
+        compiler = Rakyll::Compiler::Match.new @global_options, dependencies, source_filename, block
         @compilers.push compiler
       end
     end
 
+    def create(filename, dependencies: [], &block)
+      compiler = Rakyll::Compiler::Create.new @global_options, dependencies, filename, block
+      @compilers.push compiler
+    end
+
     def copy(pattern)
       Dir.glob(pattern).each do |source_filename|
-        compiler = Rakyll::Compiler::Copy.new @global_options, source_filename, @opts
+        compiler = Rakyll::Compiler::Copy.new @global_options, source_filename
         @compilers.push compiler
       end
     end
@@ -28,12 +32,6 @@ module Rakyll
         compiler = Rakyll::Compiler::Minify.new @global_options, source_filename, width: width, height: height, grayscale: grayscale
         @compilers.push compiler
       end
-    end
-
-    def create(filename, &block)
-      compiler = Rakyll::Compiler::Create.new @global_options, filename, @opts
-      compiler.instance_eval &block
-      @compilers.push compiler
     end
 
     def save

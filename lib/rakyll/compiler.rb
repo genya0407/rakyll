@@ -48,6 +48,20 @@ module Rakyll
       end
     end
 
+    module SetExtraDependencies
+      def set_extra_dependencies(dependencies)
+        @dependencies = dependencies
+      end
+
+      def paths_to_watch
+        if defined?(super)
+          super + @dependencies
+        else
+          @dependencies
+        end
+      end
+    end
+
     module WatchSourceFile
       require 'listen'
 

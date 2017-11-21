@@ -5,24 +5,29 @@ module Rakyll
       include SetFilename
       include SetSourceFilename
       include WatchSourceFile
+      include SetExtraDependencies
       attr_reader :body, :url
 
-      def initialize(global_options, source_filename, opts)
+      def initialize(global_options, dependencies, source_filename, block)
         @global_options = global_options
-        @opts = opts
+        set_extra_dependencies(dependencies)
         set_source_filename(source_filename)
         metadatas, markdown_string = YAML::FrontMatter.extract(File.read(@source_filename))
         set_metadatas(metadatas)
         @body = markdown_string
         set_filename(source_filename, '.html')
+
+        @block = block
+        instance_eval &block
       end
 
       def convert_to_html
-        markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, @opts[:redcarpet_extensions] || {})
+        markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, @global_options[:redcarpet_extensions] || {})
         @body = markdown.render(@body)
       end
 
       def save
+        instance_eval &@block
         File.write(@filename, @body)
       end
 
